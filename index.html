@@ -25,19 +25,20 @@
         <div id='map'></div>
 
         <script>
-        mapboxgl.accessToken; // Insert key here    
+        mapboxgl.accessToken = "pk.eyJ1IjoianB0ZWFtMjAiLCJhIjoiY2syZ284bzBmMGY2dDNnbnRnZWVtc2c4aCJ9.HMxC94EADkEu4WNGoX19sQ"; // Insert key here    
 
         var bounds = [
-            [-74.04728500751165, 40.68392799015035], // Southwest coordinates
-            [-73.91058699000139, 40.87764500765852]  // Northeast coordinates
+            [-10.805600498547392, 49.77170915956208], // Southwest coordinates
+            [2.2150631938233403, 61.27107631078121]  // Northeast coordinates
         ];
         
         var map = new mapboxgl.Map({
         container: 'map', // container id
         style: 'mapbox://styles/jpteam20/ck2glv7x715f71cppul7sjmga', // stylesheet location
-        center: [-2.4961945579520375,  54.30076111625539], // starting position [lng, lat]
-        zoom: 8 // starting zoom
+        center: [-3.186788617357422,  55.501168313478786], // starting position [lng, lat]
+        zoom: 5, // starting zoom
         });
+
         </script>
     
     </body>
