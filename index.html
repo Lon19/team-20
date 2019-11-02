@@ -147,20 +147,20 @@ border-radius: 3px;
 width: 120px;
 color: #fff;
 }
- 
+
 .filter-group input[type=checkbox]:first-child + label {
 border-radius: 3px 3px 0 0;
 }
- 
+
 .filter-group label:last-child {
 border-radius: 0 0 3px 3px;
 border: none;
 }
- 
+
 .filter-group input[type=checkbox] {
 display: none;
 }
- 
+
 .filter-group input[type=checkbox] + label {
 background-color: #3386c0;
 display: block;
@@ -168,21 +168,21 @@ cursor: pointer;
 padding: 10px;
 border-bottom: 1px solid rgba(0, 0, 0, 0.25);
 }
- 
+
 .filter-group input[type=checkbox] + label {
 background-color: #3386c0;
 text-transform: capitalize;
 }
- 
+
 .filter-group input[type=checkbox] + label:hover,
 .filter-group input[type=checkbox]:checked + label {
 background-color: #4ea0da;
 }
- 
+
 .filter-group input[type=checkbox]:checked + label:before {
 content: '✔';
 margin-right: 5px;
-}   
+}
 
 .legend {
 background-color: #fff;
@@ -195,11 +195,11 @@ position: absolute;
 left: 0.5%;
 z-index: 99999;
 }
- 
+
 .legend h4 {
 margin: 0 0 10px;
 }
- 
+
 .legend div span {
 border-radius: 50%;
 display: inline-block;
@@ -283,7 +283,7 @@ width: 10px;
         </div>>
 
         <div id='map'><div>
-        
+
         <script>
         mapboxgl.accessToken = "pk.eyJ1IjoianB0ZWFtMjAiLCJhIjoiY2syZ284bzBmMGY2dDNnbnRnZWVtc2c4aCJ9.HMxC94EADkEu4WNGoX19sQ"; // Insert key here
 
@@ -328,7 +328,7 @@ width: 10px;
         var places = {
         "type": "FeatureCollection",
         "features": []
-        } 
+        }
 
         geocoder.on('result', function(e){
             places.push({
@@ -348,7 +348,7 @@ width: 10px;
             places.features.forEach(function(feature) {
                 var symbol = feature.properties['icon'];
                 var layerID = 'poi-' + symbol;
-    
+
                 // Add a layer for this symbol type if it hasn't been added already.
                 if (!map.getLayer(layerID)) {
                     map.addLayer({
@@ -361,19 +361,19 @@ width: 10px;
                         },
                         "filter": ["==", "icon", symbol]
                     });
-    
+
                     // Add checkbox and label elements for the layer.
                     var input = document.createElement('input');
                     input.type = 'checkbox';
                     input.id = layerID;
                     input.checked = true;
                     filterGroup.appendChild(input);
-                    
+
                     var label = document.createElement('label');
                     label.setAttribute('for', layerID);
                     label.textContent = symbol;
                     filterGroup.appendChild(label);
-    
+
                     // When the checkbox changes, update the visibility of the layer.
                     input.addEventListener('change', function(e) {
                         map.setLayoutProperty(layerID, 'visibility',
@@ -401,6 +401,6 @@ width: 10px;
 
         </script>
 
-        <script src='logic.js' type="text/js"></script>
+        <script src='logic.js' type="text/javascript"></script>
     </body>
 </html>
