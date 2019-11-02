@@ -9,19 +9,44 @@
         <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.5.0/mapbox-gl.css' rel='stylesheet' />
         <style>
             body { margin:0; padding:0; }
-            #map { position:absolute; top:0; bottom:0; width:100%; }
+            #map { position:absolute; top: 0; bottom:0; width:100%; }
+
+            .geocoder {
+                position:relative;
+                z-index:99999;
+                width:50%;
+                top:25%;
+                align: center;
+            }
+
+            .mapboxgl-ctrl-geocoder { min-width:100%; }
+
+            #nav-row {
+                min-width:100%;
+            }
+
         </style>
     </head>
     <body>
 
-        <nav class="navbar navbar-light fixed-top bg-light">
-            <img class="navbar-brand" src="https://www.movementtowork.com/wp-content/uploads/2018/08/MTW_Logo.png" width="200" margin-left="0px" class="d-inline-block align-top" alt="">
-            <form class="form-inline">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-            </form>
+        <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.2/mapbox-gl-geocoder.min.js'></script>
+        <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.2/mapbox-gl-geocoder.css' type='text/css' />
+        <!-- Promise polyfill script required to use Mapbox GL Geocoder in IE 11 -->
+        <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
+
+        <nav class="navbar navbar-light fixed-top bg-light shadow-lg">
+            <div id="nav-row" class="row">
+                <div class="col-sm">
+                    <img src="https://www.movementtowork.com/wp-content/uploads/2018/08/MTW_Logo.png" width="200" margin-left="0px">
+                </div>
+                <div class="col-sm"></div>
+                <div class="col-sm">
+                    <div id='geocoder' class='geocoder'></div>
+                </div>
+            </div>
         </nav>
-    
+
         <div id='map'></div>
 
         <script>
@@ -37,8 +62,20 @@
         style: 'mapbox://styles/jpteam20/ck2glv7x715f71cppul7sjmga', // stylesheet location
         center: [-3.186788617357422,  55.501168313478786], // starting position [lng, lat]
         zoom: 5, // starting zoom
+        pitch: 60, // pitch in degrees
+        bearing: -0, // bearing in degrees
         });
 
+        var geocoder = new MapboxGeocoder({
+        accessToken: mapboxgl.accessToken,
+        mapboxgl: mapboxgl,
+        marker: {
+            color: '#e4018b'
+        },
+        getZoom: 7
+        });
+        
+        document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
         </script>
     
     </body>
