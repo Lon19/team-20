@@ -15,6 +15,36 @@
             }
             #map { position:absolute; top: 0; bottom:0; width:100%; }
 
+            .overlay {
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                height: 100%;
+                width: 100%;
+                opacity: 0;
+                transition: .5s ease;
+                background-color: #ffffff;
+            }
+
+            .container:hover .overlay {
+                opacity: 1;
+            }
+
+            .text {
+                color: grey;
+                font-size: 20px;
+                position: absolute;
+                top: -10%;
+                left: 0%;
+                -webkit-transform: translate(-50%, -50%);
+                -ms-transform: translate(-50%, -50%);
+                transform: translate(-50%, -50%);
+                text-align: center;
+            }
+
+
             .geocoder {
                 position:relative;
                 z-index:99999;
@@ -44,7 +74,7 @@
                 border-radius: 3px;
                 font-size: 12px;
                 text-align: center;
-                color: #fff;
+                color: #ffffff;
                 background: #ee8a65;
             }
 
@@ -58,10 +88,17 @@
         <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
 
-        <nav class="navbar navbar-light fixed-top bg-light shadow-lg">
+        <nav class="navbar navbar-white fixed-top bg-white shadow-lg" style="background-color: #ffffff">
             <div id="nav-row" class="row">
                 <div class="col-sm">
-                    <img src="https://www.movementtowork.com/wp-content/uploads/2018/08/MTW_Logo.png" width="200" margin-left="0px">
+                    <div class="container">
+                        <img src="https://www.movementtowork.com/wp-content/uploads/2018/08/MTW_Logo.png" width="200" margin-left="0px">
+                        <div class="overlay">
+                            <a href="https://www.movementtowork.com/">
+                                <img class="text" style="transform: scaleX(-1);" width="100px" height="100px" src="arrow-icon.png"><a href="movement2work.com"></a>
+                            </a>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-sm"></div>
                 <div class="col-sm">
