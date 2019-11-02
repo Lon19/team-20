@@ -12,14 +12,19 @@
             #map { position:absolute; top: 0; bottom:0; width:100%; }
 
             .geocoder {
-                position:absolute;
+                position:relative;
                 z-index:99999;
                 width:50%;
-                left: 82%;
-                top:20px;
+                top:25%;
+                align: center;
             }
 
             .mapboxgl-ctrl-geocoder { min-width:100%; }
+
+            #nav-row {
+                min-width:100%;
+            }
+
         </style>
     </head>
     <body>
@@ -30,8 +35,8 @@
         <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
 
-        <nav class="navbar navbar-light fixed-top bg-light">
-            <div class="row">
+        <nav class="navbar navbar-light fixed-top bg-light shadow-lg">
+            <div id="nav-row" class="row">
                 <div class="col-sm">
                     <img src="https://www.movementtowork.com/wp-content/uploads/2018/08/MTW_Logo.png" width="200" margin-left="0px">
                 </div>
@@ -64,6 +69,9 @@
         var geocoder = new MapboxGeocoder({
         accessToken: mapboxgl.accessToken,
         mapboxgl: mapboxgl,
+        marker: {
+            color: '#e4018b'
+        },
         getZoom: 7
         });
         
