@@ -30,7 +30,8 @@ def process_json(json_filename="", geography="geogcode", params=[], out_file=Non
             features_dict = {}
             features_dict["obs_value"] = record["obs_value"]["value"]
             for param in params:
-                features_dict[param] = record[param]["value"]
+                if param in record.keys():
+                    features_dict[param] = record[param]["value"]
 
             d[record["geography"][geography]] = features_dict
 
@@ -55,7 +56,7 @@ with open("python/out/raw.json", "w") as outfile:
 
 # Uses custom processor to format data for ingestion onto map.
 process_json(json_filename="python/out/raw",
-             out_file="python/out/data_processed")
+             out_file="python/out/data_processed", params=["age", "gender", "oranges"])
 
 # If raw json file still exists then remove it.
 if os.path.exists("python/out/raw.json"):
