@@ -37,7 +37,7 @@ def process_json(json_filename="", geography="geogcode", params=[], out_file=Non
                 if not record["geography"][geography] in d:
                     features_dict["obs_value"] = record["obs_value"]["value"]
                 else:
-                    features_dict["obs_value"] = int(record["obs_value"]["value"]) + \
+                    features_dict["obs_value"] = record["obs_value"]["value"] + \
                         d[record["geography"][geography]]["obs_value"]
 
                 d[record["geography"][geography]] = features_dict
