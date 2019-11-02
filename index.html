@@ -6,13 +6,14 @@
         <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <link rel="icon" href="icon.png" sizes="32x32">
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500&display=swap" rel="stylesheet">
         <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.5.0/mapbox-gl.js'></script>
         <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.5.0/mapbox-gl.css' rel='stylesheet' />
         <style>
             body {
                 margin:0;
                 padding:0;
-                font-family: "Popping", "Helvetica", "sans-serif";
+                font-family: "Montserrat:300";
             }
             #map { position:absolute; top: 0; bottom:0; width:100%; }
 
@@ -129,7 +130,83 @@
                 background: #ee8a65;
             }
 
+            #locate {
+                position: absolute;
+                top: 120%;
+                left: 0.5%;
+            }
 
+            .filter-group {
+font: 12px/20px 'Montserrat';
+font-weight: 600;
+position: absolute;
+top: 10px;
+right: 10px;
+z-index: 1;
+border-radius: 3px;
+width: 120px;
+color: #fff;
+}
+
+.filter-group input[type=checkbox]:first-child + label {
+border-radius: 3px 3px 0 0;
+}
+
+.filter-group label:last-child {
+border-radius: 0 0 3px 3px;
+border: none;
+}
+
+.filter-group input[type=checkbox] {
+display: none;
+}
+
+.filter-group input[type=checkbox] + label {
+background-color: #3386c0;
+display: block;
+cursor: pointer;
+padding: 10px;
+border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+}
+
+.filter-group input[type=checkbox] + label {
+background-color: #3386c0;
+text-transform: capitalize;
+}
+
+.filter-group input[type=checkbox] + label:hover,
+.filter-group input[type=checkbox]:checked + label {
+background-color: #4ea0da;
+}
+
+.filter-group input[type=checkbox]:checked + label:before {
+content: '✔';
+margin-right: 5px;
+}
+
+.legend {
+background-color: #fff;
+border-radius: 3px;
+bottom: 8px;
+box-shadow: 0 1px 2px rgba(0,0,0,0.10);
+font: 12px/20px 'Montserrat';
+padding: 10px;
+position: absolute;
+left: 0.5%;
+z-index: 99999;
+}
+
+.legend h4 {
+margin: 0 0 10px;
+}
+
+.legend div span {
+border-radius: 50%;
+display: inline-block;
+height: 10px;
+margin-right: 5px;
+width: 10px;
+}
 
 
         </style>
@@ -154,11 +231,11 @@
           }
 
           .geocoder-dropdown-text{
-              font-family: "Poppins", Helvetica, sans-serif;
+            font-family: 'Montserrat', sans-serif;
               color: #710045;
           }
         </style>
-        <nav class="navbar navbar-light fixed-top bg-light">
+        <nav class="navbar navbar-white fixed-top bg-white">
           <div class="container">
             <div class="row">
                 <div class="col-sm">
@@ -185,32 +262,22 @@
               <div class="greenBar"><div>
             </div>
           </div>
-
-
-          <div class="modal" tabindex="-1" role="dialog">
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title">Modal title</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body">
-                  <p>Modal body text goes here.</p>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-primary">Save changes</button>
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-              </div>
-            </div>
-          </div>
+<div id='locate' class='locate'></div>
         </nav>
 
-        <button id='fly'>Fly</button>
 
-        <div id='map'></div>
+        <div id='legend' class='legend'>
+        <h4>CLAIMANT</h4>
+        <h4>COUNT</h4>
+        <div><span style='background-color: #f24343'></span>860 < </div>
+        <div><span style='background-color: #f27171'></span>260 - 859</div>
+        <div><span style='background-color: #f2a371'></span>145 - 259</div>
+        <div><span style='background-color: #f2d671'></span>105 - 144</div>
+        <div><span style='background-color: #dcf271'></span>50 - 104</div>
+        <div><span style='background-color: #85f271'></span> < 49</div>
+        </div>>
+
+        <div id='map'><div>
 
         <script>
         mapboxgl.accessToken = "pk.eyJ1IjoianB0ZWFtMjAiLCJhIjoiY2syZ284bzBmMGY2dDNnbnRnZWVtc2c4aCJ9.HMxC94EADkEu4WNGoX19sQ"; // Insert key here
@@ -248,27 +315,87 @@
             // 0 and 1 and returns another number between 0 and 1.
             easing: function (t) { return t; }
         },
-        getZoom: 7
+        getZoom: 7,
         });
 
         document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
 
-        document.getElementById('fly').addEventListener('click', function () {
-            // Fly to a random location by offsetting the point -74.50, 40
-            // by up to 5 degrees.
-            map.flyTo({
-                center: [
-                    -3.186788617357422,  55.501168313478786
+        var places = {
+        "type": "FeatureCollection",
+        "features": []
+        }
+
+        geocoder.on('result', function(e){
+            places.push({
+                "type": "Feature",
+                "geometry": {
+                "type": "Point",
+                "coordinates": [
+                e.lngLat.lng,
+                e.lngLat.lat
                 ]
+                }})
+            map.addSource("places", {
+                "type": "geojson",
+                "data": places
+            });
+
+            places.features.forEach(function(feature) {
+                var symbol = feature.properties['icon'];
+                var layerID = 'poi-' + symbol;
+
+                // Add a layer for this symbol type if it hasn't been added already.
+                if (!map.getLayer(layerID)) {
+                    map.addLayer({
+                        "id": layerID,
+                        "type": "symbol",
+                        "source": "places",
+                        "layout": {
+                            "icon-image": symbol + "-15",
+                            "icon-allow-overlap": true
+                        },
+                        "filter": ["==", "icon", symbol]
+                    });
+
+                    // Add checkbox and label elements for the layer.
+                    var input = document.createElement('input');
+                    input.type = 'checkbox';
+                    input.id = layerID;
+                    input.checked = true;
+                    filterGroup.appendChild(input);
+
+                    var label = document.createElement('label');
+                    label.setAttribute('for', layerID);
+                    label.textContent = symbol;
+                    filterGroup.appendChild(label);
+
+                    // When the checkbox changes, update the visibility of the layer.
+                    input.addEventListener('change', function(e) {
+                        map.setLayoutProperty(layerID, 'visibility',
+                        e.target.checked ? 'visible' : 'none');
+                    });
+                }
             });
         });
+
+       var locate = new mapboxgl.GeolocateControl({
+            positionOptions: {
+                enableHighAccuracy: true
+            },
+            trackUserLocation: true,
+            color: '#e4018b'
+        });
+
+        document.getElementById('locate').appendChild(locate.onAdd(map));
+
+        var legend = document.getElementById('legend');
+
 
         var nav = new mapboxgl.NavigationControl();
         map.addControl(nav, 'bottom-right');
 
         </script>
 
-        <script type="text/javascript" src="logic.js"></script>
-
+        <script src='logic.js' type="text/js"></script>
     </body>
 </html>
