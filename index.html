@@ -21,14 +21,40 @@
                 width:50%;
                 top:25%;
                 text-align: center;
-                left: 250%;
+                margin-left: 300%;
+            }
+            @media only screen and (max-width: 1360px){
+              .geocoder{
+                margin-left: 250%;
+              }
             }
 
+            @media only screen and (max-width: 1200px){
+              .geocoder{
+                margin-left: 200%;
+              }
+            }
+
+            @media only screen and (max-width: 1000px){
+              .geocoder{
+                margin-left: 10%;
+                top: 100%;
+              }
+            }
+
+
+            .col-sm .geocoder{
+
+            }
+            ::placeholder {
+              color: #710045;
+              opacity: 0.5;
+            }
             .pinkBar {
               position:absolute;
               width:33%;
               top:92px;
-              left:33;
+              left:33%;
               height:10px;
               background-color: #E4018B;
             }
@@ -51,15 +77,11 @@
               background-color: #B2D234;
             }
 
-            .mapboxgl-ctrl-geocoder { min-width:100%; }
-
-            .geocoder-dropdown-text{
-                font-family: "Poppins", Helvetica, sans-serif;
-            }
 
             #nav-row {
                 min-width:100%;
             }
+
 
             #fly {
                 display: block;
@@ -76,6 +98,9 @@
                 background: #ee8a65;
             }
 
+
+
+
         </style>
     </head>
     <body>
@@ -85,7 +110,23 @@
         <!-- Promise polyfill script required to use Mapbox GL Geocoder in IE 11 -->
         <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
+        <style>
+          .geocoder-dropdown-item {
+            padding: 5px
+          }
+          .geocoder-dropdown-icon {
+            margin-right: 10px;
+          }
 
+          .mapboxgl-ctrl-geocoder {
+            box-shadow: 0 0 1px 1px #E4018B;
+          }
+
+          .geocoder-dropdown-text{
+              font-family: "Poppins", Helvetica, sans-serif
+              color: #710045;
+          }
+        </style>
         <nav class="navbar navbar-light fixed-top bg-light">
           <div class="container">
             <div class="row">
@@ -104,6 +145,27 @@
               <div class="pinkBar"></div>
               <div class="burgandyBar"></div>
               <div class="greenBar"><div>
+            </div>
+          </div>
+
+
+          <div class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Modal title</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <p>Modal body text goes here.</p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-primary">Save changes</button>
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+              </div>
             </div>
           </div>
         </nav>
