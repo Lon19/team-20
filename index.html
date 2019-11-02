@@ -33,6 +33,21 @@
                 min-width:100%;
             }
 
+            #fly {
+                display: block;
+                position: relative;
+                margin: 0px auto;
+                width: 50%;
+                height: 40px;
+                padding: 10px;
+                border: none;
+                border-radius: 3px;
+                font-size: 12px;
+                text-align: center;
+                color: #fff;
+                background: #ee8a65;
+            }
+
         </style>
     </head>
     <body>
@@ -55,6 +70,8 @@
             </div>
         </nav>
 
+        <button id='fly'>Fly</button>
+
         <div id='map'></div>
 
         <script>
@@ -72,7 +89,8 @@
         zoom: 5, // starting zoom
         pitch: 45, // pitch in degrees
         bearing: -0, // bearing in degrees
-        maxZoom: 12
+        maxZoom: 12, // Max zoom value
+        attributionControl: false
         });
 
         var geocoder = new MapboxGeocoder({
@@ -96,6 +114,20 @@
         });
         
         document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
+
+        document.getElementById('fly').addEventListener('click', function () {
+            // Fly to a random location by offsetting the point -74.50, 40
+            // by up to 5 degrees.
+            map.flyTo({
+                center: [
+                    -3.186788617357422,  55.501168313478786
+                ]
+            });
+        });
+
+        var nav = new mapboxgl.NavigationControl();
+        map.addControl(nav, 'bottom-right');
+        
         </script>
 
         <script type="text/javascript" src="logic.js"></script>
