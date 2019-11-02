@@ -8,157 +8,33 @@
         <link rel="icon" href="icon.png" sizes="32x32">
         <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.5.0/mapbox-gl.js'></script>
         <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.5.0/mapbox-gl.css' rel='stylesheet' />
-        <style>
-            body {
-                margin:0;
-                padding:0;
-                font-family: "Popping", "Helvetica", "sans-serif";
-            }
-            #map { position:absolute; top: 0; bottom:0; width:100%; }
 
-            .overlay {
-                position: absolute;
-                top: 0;
-                bottom: 0;
-                left: 0;
-                right: 0;
-                height: 100%;
-                width: 100%;
-                opacity: 0;
-                transition: .5s ease;
-                background-color: #ffffff;
-            }
-
-            .container:hover .overlay {
-                opacity: 1;
-            }
-
-            .text {
-                color: grey;
-                font-size: 20px;
-                position: absolute;
-                top: -10%;
-                left: 0%;
-                -webkit-transform: translate(-50%, -50%);
-                -ms-transform: translate(-50%, -50%);
-                transform: translate(-50%, -50%);
-                text-align: center;
-            }
-
-
-            .geocoder {
-                position:relative;
-                z-index:99999;
-                width:50%;
-                top:25%;
-                text-align: center;
-                margin-left: 300%;
-            }
-            @media only screen and (max-width: 1360px){
-              .geocoder{
-                margin-left: 250%;
-              }
-            }
-
-            @media only screen and (max-width: 1200px){
-              .geocoder{
-                margin-left: 200%;
-              }
-            }
-
-            @media only screen and (max-width: 1000px){
-              .geocoder{
-                margin-left: 10%;
-                top: 100%;
-              }
-            }
-
-
-            .col-sm .geocoder{
-
-            }
-            ::placeholder {
-              color: #710045;
-              opacity: 0.5;
-            }
-            .pinkBar {
-              position:absolute;
-              width:33%;
-              top:92px;
-              left:33%;
-              height:10px;
-              background-color: #E4018B;
-            }
-
-            .burgandyBar {
-              position:absolute;
-              width:33%;
-              top:92px;
-              height: 10px;
-              left: 0px;
-              background-color: #710045;
-            }
-
-            .greenBar {
-              position:absolute;
-              width:35%;
-              top:92px;
-              left:66%;
-              height:10px;
-              background-color: #B2D234;
-            }
-
-
-            #nav-row {
-                min-width:100%;
-            }
-
-
-            #fly {
-                display: block;
-                position: relative;
-                margin: 0px auto;
-                width: 50%;
-                height: 40px;
-                padding: 10px;
-                border: none;
-                border-radius: 3px;
-                font-size: 12px;
-                text-align: center;
-                color: #ffffff;
-                background: #ee8a65;
-            }
-
-
-
-
-        </style>
+<link rel="stylesheet" href="style.css">
     </head>
     <body>
-
         <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.2/mapbox-gl-geocoder.min.js'></script>
         <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.2/mapbox-gl-geocoder.css' type='text/css' />
         <!-- Promise polyfill script required to use Mapbox GL Geocoder in IE 11 -->
         <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
-        <style>
-          .geocoder-dropdown-item {
-            padding: 5px
-          }
-          .geocoder-dropdown-icon {
-            margin-right: 10px;
-          }
 
-          .mapboxgl-ctrl-geocoder {
-            box-shadow: 0 0 1px 1px #E4018B;
-          }
+        <nav class="navbar navbar-light fixed-top bg-light" id="smolOne">
+          <div>
+          <img src="https://www.movementtowork.com/wp-content/uploads/2018/08/MTW_Logo.png" width="200" margin-left="0px">
 
-          .geocoder-dropdown-text{
-              font-family: "Poppins", Helvetica, sans-serif
-              color: #710045;
-          }
-        </style>
-        <nav class="navbar navbar-light fixed-top bg-light">
+          <div class="container" id="colourStrip">
+            <div class="row">
+              <div class="pinkBar"></div>
+              <div class="burgandyBar"></div>
+              <div class="greenBar"></div>
+            </div>
+          </div>
+
+
+        </nav>
+
+
+        <nav class="navbar navbar-light fixed-top bg-light" id="bigOne">
           <div class="container">
             <div class="row">
                 <div class="col-sm">
@@ -178,7 +54,7 @@
             </div>
           </div>
 
-          <div class="container">
+          <div class="container" id="colourStrip">
             <div class="row">
               <div class="pinkBar"></div>
               <div class="burgandyBar"></div>
@@ -186,26 +62,6 @@
             </div>
           </div>
 
-
-          <div class="modal" tabindex="-1" role="dialog">
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title">Modal title</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body">
-                  <p>Modal body text goes here.</p>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-primary">Save changes</button>
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-              </div>
-            </div>
-          </div>
         </nav>
 
         <button id='fly'>Fly</button>
@@ -266,6 +122,14 @@
         var nav = new mapboxgl.NavigationControl();
         map.addControl(nav, 'bottom-right');
 
+        </script>
+        <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.12.0.min.js"></script>
+        <script>
+        if($(window).width() <= 768){
+        map.addControl(new MapboxGeocoder({
+          accessToken: mapboxgl.accessToken,
+          mapboxgl: mapboxgl
+        }));}
         </script>
 
         <script type="text/javascript" src="logic.js"></script>
