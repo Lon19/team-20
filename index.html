@@ -8,7 +8,11 @@
         <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.5.0/mapbox-gl.js'></script>
         <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.5.0/mapbox-gl.css' rel='stylesheet' />
         <style>
-            body { margin:0; padding:0; }
+            body { 
+                margin:0;
+                padding:0; 
+                font-family: "Popping", "Helvetica", "sans-serif";
+            }
             #map { position:absolute; top: 0; bottom:0; width:100%; }
 
             .geocoder {
@@ -20,6 +24,10 @@
             }
 
             .mapboxgl-ctrl-geocoder { min-width:100%; }
+
+            .geocoder-dropdown-text{
+                font-family: "Poppins", Helvetica, sans-serif;
+            }
 
             #nav-row {
                 min-width:100%;
@@ -71,6 +79,17 @@
         mapboxgl: mapboxgl,
         marker: {
             color: '#e4018b'
+        },
+        flyTo: {
+            bearing: 0,
+            // These options control the flight curve, making it move
+            // slowly and zoom out almost completely before starting
+            // to pan.
+            speed: 1, // make the flying slow
+            curve: 0.5, // change the speed at which it zooms out
+            // This can be any easing function: it takes a number between
+            // 0 and 1 and returns another number between 0 and 1.
+            easing: function (t) { return t; }
         },
         getZoom: 7
         });
