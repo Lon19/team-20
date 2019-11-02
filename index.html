@@ -2,36 +2,135 @@
 <html>
     <head>
         <meta charset='utf-8' />
-        <title>Display a map</title>
+        <title>Youth Unemployment Visualisation | Movement 2 Work</title>
         <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="icon" href="icon.png" sizes="32x32">
         <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.5.0/mapbox-gl.js'></script>
         <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.5.0/mapbox-gl.css' rel='stylesheet' />
         <style>
-            body { 
+            body {
                 margin:0;
-                padding:0; 
+                padding:0;
                 font-family: "Popping", "Helvetica", "sans-serif";
             }
             #map { position:absolute; top: 0; bottom:0; width:100%; }
+
+            .overlay {
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                height: 100%;
+                width: 100%;
+                opacity: 0;
+                transition: .5s ease;
+                background-color: #f8f9fa;
+            }
+
+            .container:hover .overlay {
+                opacity: 1;
+            }
+
+            .text {
+                color: grey;
+                font-size: 20px;
+                position: absolute;
+                top: -10%;
+                left: 0%;
+                -webkit-transform: translate(-50%, -50%);
+                -ms-transform: translate(-50%, -50%);
+                transform: translate(-50%, -50%);
+                text-align: center;
+            }
+
 
             .geocoder {
                 position:relative;
                 z-index:99999;
                 width:50%;
                 top:25%;
-                align: center;
+                text-align: center;
+                margin-left: 300%;
+            }
+            @media only screen and (max-width: 1360px){
+              .geocoder{
+                margin-left: 250%;
+              }
             }
 
-            .mapboxgl-ctrl-geocoder { min-width:100%; }
-
-            .geocoder-dropdown-text{
-                font-family: "Poppins", Helvetica, sans-serif;
+            @media only screen and (max-width: 1200px){
+              .geocoder{
+                margin-left: 200%;
+              }
             }
+
+            @media only screen and (max-width: 1000px){
+              .geocoder{
+                margin-left: 10%;
+                top: 100%;
+              }
+            }
+
+
+            .col-sm .geocoder{
+
+            }
+            ::placeholder {
+              color: #710045;
+              opacity: 0.5;
+            }
+            .pinkBar {
+              position:absolute;
+              width:33%;
+              top:92px;
+              left:33%;
+              height:10px;
+              background-color: #E4018B;
+            }
+
+            .burgandyBar {
+              position:absolute;
+              width:33%;
+              top:92px;
+              height: 10px;
+              left: 0px;
+              background-color: #710045;
+            }
+
+            .greenBar {
+              position:absolute;
+              width:35%;
+              top:92px;
+              left:66%;
+              height:10px;
+              background-color: #B2D234;
+            }
+
 
             #nav-row {
                 min-width:100%;
             }
+
+
+            #fly {
+                display: block;
+                position: relative;
+                margin: 0px auto;
+                width: 50%;
+                height: 40px;
+                padding: 10px;
+                border: none;
+                border-radius: 3px;
+                font-size: 12px;
+                text-align: center;
+                color: #ffffff;
+                background: #ee8a65;
+            }
+
+
+
 
         </style>
     </head>
@@ -42,29 +141,85 @@
         <!-- Promise polyfill script required to use Mapbox GL Geocoder in IE 11 -->
         <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
+        <style>
+          .geocoder-dropdown-item {
+            padding: 5px
+          }
+          .geocoder-dropdown-icon {
+            margin-right: 10px;
+          }
 
-        <nav class="navbar navbar-light fixed-top bg-light shadow-lg">
-            <div id="nav-row" class="row">
+          .mapboxgl-ctrl-geocoder {
+            box-shadow: 0 0 1px 1px #E4018B;
+          }
+
+          .geocoder-dropdown-text{
+              font-family: "Poppins", Helvetica, sans-serif
+              color: #710045;
+          }
+        </style>
+        <nav class="navbar navbar-light fixed-top bg-light">
+          <div class="container">
+            <div class="row">
                 <div class="col-sm">
-                    <img src="https://www.movementtowork.com/wp-content/uploads/2018/08/MTW_Logo.png" width="200" margin-left="0px">
+                    <div class="container">
+                        <img src="https://www.movementtowork.com/wp-content/uploads/2018/08/MTW_Logo.png" width="200" margin-left="0px">
+                        <div class="overlay">
+                            <a href="https://www.movementtowork.com/">
+                                <img class="text" style="transform: scaleX(-1);" width="100px" height="100px" src="arrow-icon.png"><a href="movement2work.com"></a>
+                            </a>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-sm"></div>
                 <div class="col-sm">
                     <div id='geocoder' class='geocoder'></div>
                 </div>
             </div>
+          </div>
+
+          <div class="container">
+            <div class="row">
+              <div class="pinkBar"></div>
+              <div class="burgandyBar"></div>
+              <div class="greenBar"><div>
+            </div>
+          </div>
+
+
+          <div class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Modal title</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <p>Modal body text goes here.</p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-primary">Save changes</button>
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
         </nav>
+
+        <button id='fly'>Fly</button>
 
         <div id='map'></div>
 
         <script>
-        mapboxgl.accessToken = "pk.eyJ1IjoianB0ZWFtMjAiLCJhIjoiY2syZ284bzBmMGY2dDNnbnRnZWVtc2c4aCJ9.HMxC94EADkEu4WNGoX19sQ"; // Insert key here    
+        mapboxgl.accessToken = "pk.eyJ1IjoianB0ZWFtMjAiLCJhIjoiY2syZ284bzBmMGY2dDNnbnRnZWVtc2c4aCJ9.HMxC94EADkEu4WNGoX19sQ"; // Insert key here
 
         var bounds = [
             [-10.805600498547392, 49.77170915956208], // Southwest coordinates
             [2.2150631938233403, 61.27107631078121]  // Northeast coordinates
         ];
-        
+
         var map = new mapboxgl.Map({
         container: 'map', // container id
         style: 'mapbox://styles/jpteam20/ck2glv7x715f71cppul7sjmga', // stylesheet location
@@ -72,6 +227,8 @@
         zoom: 5, // starting zoom
         pitch: 0, // pitch in degrees
         bearing: -0, // bearing in degrees
+        maxZoom: 12, // Max zoom value
+        attributionControl: false
         });
 
         var geocoder = new MapboxGeocoder({
@@ -93,11 +250,25 @@
         },
         getZoom: 7
         });
-        
+
         document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
+
+        document.getElementById('fly').addEventListener('click', function () {
+            // Fly to a random location by offsetting the point -74.50, 40
+            // by up to 5 degrees.
+            map.flyTo({
+                center: [
+                    -3.186788617357422,  55.501168313478786
+                ]
+            });
+        });
+
+        var nav = new mapboxgl.NavigationControl();
+        map.addControl(nav, 'bottom-right');
+
         </script>
 
         <script type="text/javascript" src="logic.js"></script>
-    
+
     </body>
 </html>
