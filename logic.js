@@ -30,7 +30,7 @@ var popup = new mapboxgl.Popup({
 
 map.on('mouseenter', 'simpleone', function(f){
     map.getCanvas().style.cursor = 'pointer';
-
+    var mapboxClient = mapboxSdk({accessToken: "pk.eyJ1IjoianB0ZWFtMjAiLCJhIjoiY2syZ284bzBmMGY2dDNnbnRnZWVtc2c4aCJ9.HMxC94EADkEu4WNGoX19sQ"});
     mapboxClient.geocoding.reverseGeocode({
         query: [f.lngLat.lng, f.lngLat.lat],
         autocomplete: false,
@@ -38,9 +38,9 @@ map.on('mouseenter', 'simpleone', function(f){
         .send()
         .then(function (response) {
             var info = response;
-        })
+        });
 
-    popup.setLngLat([f.lngLat.lng, f.lngLat.lat]).setHTML(info).addTo(map);
+    popup.setLngLat([f.lngLat.lng, f.lngLat.lat]).setHTML('poo').addTo(map);
 });
 
 map.on('mouseleave', 'simpleone', function(f){
