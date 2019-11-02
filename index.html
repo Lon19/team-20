@@ -2,9 +2,10 @@
 <html>
     <head>
         <meta charset='utf-8' />
-        <title>Movement To Work</title>
+        <title>Youth Unemployment Visualisation | Movement 2 Work</title>
         <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="icon" href="icon.png" sizes="32x32">
         <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.5.0/mapbox-gl.js'></script>
         <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.5.0/mapbox-gl.css' rel='stylesheet' />
         <style>
@@ -14,6 +15,36 @@
                 font-family: "Popping", "Helvetica", "sans-serif";
             }
             #map { position:absolute; top: 0; bottom:0; width:100%; }
+
+            .overlay {
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                height: 100%;
+                width: 100%;
+                opacity: 0;
+                transition: .5s ease;
+                background-color: #ffffff;
+            }
+
+            .container:hover .overlay {
+                opacity: 1;
+            }
+
+            .text {
+                color: grey;
+                font-size: 20px;
+                position: absolute;
+                top: -10%;
+                left: 0%;
+                -webkit-transform: translate(-50%, -50%);
+                -ms-transform: translate(-50%, -50%);
+                transform: translate(-50%, -50%);
+                text-align: center;
+            }
+
 
             .geocoder {
                 position:relative;
@@ -94,7 +125,7 @@
                 border-radius: 3px;
                 font-size: 12px;
                 text-align: center;
-                color: #fff;
+                color: #ffffff;
                 background: #ee8a65;
             }
 
@@ -131,7 +162,14 @@
           <div class="container">
             <div class="row">
                 <div class="col-sm">
-                    <img src="https://www.movementtowork.com/wp-content/uploads/2018/08/MTW_Logo.png" width="200" margin-left="0px">
+                    <div class="container">
+                        <img src="https://www.movementtowork.com/wp-content/uploads/2018/08/MTW_Logo.png" width="200" margin-left="0px">
+                        <div class="overlay">
+                            <a href="https://www.movementtowork.com/">
+                                <img class="text" style="transform: scaleX(-1);" width="100px" height="100px" src="arrow-icon.png"><a href="movement2work.com"></a>
+                            </a>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-sm"></div>
                 <div class="col-sm">
@@ -187,7 +225,7 @@
         style: 'mapbox://styles/jpteam20/ck2glv7x715f71cppul7sjmga', // stylesheet location
         center: [-3.186788617357422,  55.501168313478786], // starting position [lng, lat]
         zoom: 5, // starting zoom
-        pitch: 45, // pitch in degrees
+        pitch: 0, // pitch in degrees
         bearing: -0, // bearing in degrees
         maxZoom: 12, // Max zoom value
         attributionControl: false
