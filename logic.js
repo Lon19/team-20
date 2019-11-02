@@ -4,6 +4,7 @@ const colors = ['#f24343', '#f27171', '#f2a371', '#f2d671', '#dcf271', '#85f271'
 
 const simpleOne = 'Wards_December_2015_Full_Clip-bxp05f';
 const detailedOne = 'Wards_December_2015_Full_Clip-41pq8l';
+// const detailedOne = 'Wards_December_2015_Full_Clip-bxp05f';
 
 let data;
 let oldZoom;
