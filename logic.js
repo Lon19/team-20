@@ -26,28 +26,6 @@ var popup = new mapboxgl.Popup({
     closeOnClick: false
 });
 
-
-
-map.on('mouseenter', 'simpleone', function(f){
-    map.getCanvas().style.cursor = 'pointer';
-    var mapboxClient = mapboxSdk({accessToken: "pk.eyJ1IjoianB0ZWFtMjAiLCJhIjoiY2syZ284bzBmMGY2dDNnbnRnZWVtc2c4aCJ9.HMxC94EADkEu4WNGoX19sQ"});
-    mapboxClient.geocoding.reverseGeocode({
-        query: [f.lngLat.lng, f.lngLat.lat],
-        autocomplete: false,
-        limit: 1})
-        .send()
-        .then(function (response) {
-            var info = response;
-        });
-
-    popup.setLngLat([f.lngLat.lng, f.lngLat.lat]).setHTML('poo').addTo(map);
-});
-
-map.on('mouseleave', 'simpleone', function(f){
-    map.getCanvas().style.cursor = '';
-    popup.remove();
-});
-
 map.on('load', function(e){
 
     for (let i = 0; i < densities.length; i++){
