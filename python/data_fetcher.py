@@ -1,4 +1,4 @@
-from process_json import process_json
+from .process_json import process_json
 import requests
 import json
 
@@ -14,4 +14,4 @@ with open("out/raw.json", "w") as outfile:
     json.dump(response, outfile)
 
 # Uses custom processor to format data for ingestion onto map.
-process_json(json_filename="out/raw", out_file="out/data_processed.json")
+process_json(json_filename="out/raw", out_file="out/data_processed")
