@@ -26,14 +26,29 @@ def process_json(json_filename="", geography="geogcode", params=[], out_file=Non
         observations = api_data["obs"]
 
         d = {}
-        for record in observations:
-            features_dict = {}
-            features_dict["obs_value"] = record["obs_value"]["value"]
-            for param in params:
-                if param in record.keys():
-                    features_dict[param] = record[param]["value"]
 
-            d[record["geography"][geography]] = features_dict
+        if params:
+            for record in observations:
+                features_dict = {}
+                # if else statement to accumlate values across age groups
+                for param in params:
+                    if param in record.keys():
+                        features_dict[param] = record[param]["value"]
+                if not record["geography"][geography] in d:
+                    features_dict["obs_value"] = record["obs_value"]["value"]
+                else:
+                    features_dict["obs_value"] = int(record["obs_value"]["value"]) + \
+                        d[record["geography"][geography]]["obs_value"]
+
+                d[record["geography"][geography]] = features_dict
+        else:
+            for record in observations:
+                if not record["geography"][geography] in d:
+                    d[record["geography"][geography]
+                      ] = record["obs_value"]["value"]
+                else:
+                    d[record["geography"][geography]
+                      ] += record["obs_value"]["value"]
 
         if not out_file:
             out_file = f"{json_filename}_processed"
@@ -56,8 +71,8 @@ with open("python/out/raw.json", "w") as outfile:
 
 # Uses custom processor to format data for ingestion onto map.
 process_json(json_filename="python/out/raw",
-             out_file="python/out/data_processed", params=["age", "gender", "oranges"])
+             out_file="python/out/data_processed", geography="description", params=["age"])
 
 # If raw json file still exists then remove it.
-if os.path.exists("python/out/raw.json"):
-    os.remove("python/out/raw.json")
+# if os.path.exists("python/out/raw.json"):
+#     os.remove("python/out/raw.json")
