@@ -26,10 +26,21 @@ var popup = new mapboxgl.Popup({
     closeOnClick: false
 });
 
+
+
 map.on('mouseenter', 'simpleone', function(f){
     map.getCanvas().style.cursor = 'pointer';
 
-    popup.setLngLat([f.lngLat.lng, f.lngLat.lat]).setHTML('pop').addTo(map);
+    mapboxClient.geocoding.reverseGeocode({
+        query: [f.lngLat.lng, f.lngLat.lat],
+        autocomplete: false,
+        limit: 1})
+        .send()
+        .then(function (response) {
+            var info = response;
+        })
+
+    popup.setLngLat([f.lngLat.lng, f.lngLat.lat]).setHTML(info).addTo(map);
 });
 
 map.on('mouseleave', 'simpleone', function(f){
